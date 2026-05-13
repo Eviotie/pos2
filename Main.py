@@ -313,7 +313,7 @@ def create_business():
     if not name:
         return messagebox.showwarning("Input Error", "Please enter a business name.")
     
-    os.makedirs("Data")
+    os.makedirs("Data", exist_ok=True)
     new_path = os.path.join("Data", name)
     
     if os.path.exists(new_path):
@@ -323,7 +323,9 @@ def create_business():
     os.makedirs(new_path)
     with open(os.path.join(new_path, 'data.csv'), 'w', newline='') as f:
         csv.writer(f).writerow(["Name", "Quantity", "Sell price", "buy price"])
-
+    
+    with open(os.path.join(new_path, 'sales.csv'), 'w', newline='') as f:
+        csv.writer(f).writerow(["Timestamp", "Items", "Total"])
     
     # Automatically switch to the new business
     data_path = os.path.join(new_path, 'data.csv')
